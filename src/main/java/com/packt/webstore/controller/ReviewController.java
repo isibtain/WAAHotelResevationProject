@@ -85,7 +85,17 @@ public class ReviewController {
 	@RequestMapping(value="/review", method = RequestMethod.POST)
     public String addReview(@Valid @ModelAttribute("review") Review review, BindingResult result, RedirectAttributes redirect){
         System.out.print("________Inside Review POST _________");
-        reviewRepository.save(review);
+        
+        try {
+			reviewService.save(review);
+		} catch (Exception up) {
+	      System.out.println("Transaction Failed!!!");
+		}
+        
+        
+        if (result.hasErrors()) {
+        	return "review";
+        }
         sumRating+=  Integer.parseInt(review.getRating());
         redirect.addFlashAttribute("review", review);
         return "redirect:/review";

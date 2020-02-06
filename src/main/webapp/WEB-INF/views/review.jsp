@@ -23,9 +23,9 @@
       <nav>
         <ul>
           <li><a href="<spring:url  value="/index" />" ><spring:message code="home" /></a></li>
-          <li><a href="<spring:url  value="/admin" />" class="active"><spring:message code="admin" /></a></li>
+          <li><a href="<spring:url  value="/admin" />" ><spring:message code="admin" /></a></li>
           <li><a href="<spring:url  value="/search" />" ><spring:message code="search" /></a></li>
-          <li><a href="<spring:url  value="/review" />" ><spring:message code="reviews" /></a></li>
+          <li><a href="<spring:url  value="/review" />" class="active"><spring:message code="reviews" /></a></li>
           <li><a href="<spring:url  value="/signup" />" ><spring:message code="sign.up" /></a></li>  
           <li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>     
         </ul>
@@ -43,7 +43,7 @@
 
             <div id="reviewSummary">
                     <span class="averageStars"></span>
-                    <span class="averageScore">  <fmt:formatNumber type="number" maxFractionDigits="2" value="${avg}" />
+                    <span class="averageScore">Average Rating:  <fmt:formatNumber type="number" maxFractionDigits="2" value="${avg}" />
                        </span>
                     <span class="reviewCount">Total ${size} reviews</span>
                     <span id="btn_add_review"> + Add Review </span> 
@@ -56,24 +56,14 @@
 	        	<legend>Add Review</legend>
 	        	
 	        	<p>
-	                Reviewer First Name: <form:input id="firstName" path="firstName" type="text" size="20" />
-	                Reviewer Last Name:<form:input id="lastName" path="lastName" type="text" size="20" /><br>
-	                <form:errors path="firstName" cssClass="text-danger"/>
-	                <form:errors path="lastName" cssClass="text-danger"/>
-            	</p>
-	        	
-		        <p>
-		            <label for=rating>Rating</label>
-					Rating: <form:input id="rating" path="rating" type="text" size="20"/>
-		 				
-					<form:errors path="rating" cssClass="text-danger"/>
-		        </p>
-		        
-		        <p>
-		            <label for="comment">Comment</label>
+	                Reviewer First Name:<form:input id="firstName" path="firstName" type="text" size="20" />
+	                <form:errors path="firstName" cssClass="text-danger" cssStyle="color:red"/><br>
+	                Reviewer Last Name:<form:input id="lastName" path="lastName" type="text" size="20" />
+	                <form:errors path="lastName" cssClass="alert alert-danger" cssStyle="color:red"/><br>
+					Rating:<form:input id="rating" path="rating" type="text" size="20"/>
+					<form:errors path="rating" cssClass="alert text-danger" cssStyle="color:red"/><br>
 		            Comment: <form:input id="comment" path="comment" type="text" size="20"/>
-					
-					<form:errors path="comment" cssClass="text-danger"/>
+					<form:errors path="comment" cssClass="text-danger" cssStyle="color:red"/><br>
 		        </p>
 	         
 		        <p id="buttons">

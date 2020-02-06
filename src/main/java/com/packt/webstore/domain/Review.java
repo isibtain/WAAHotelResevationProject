@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -27,8 +28,7 @@ public class Review  {
 	
 	
 
-	@NotEmpty
-    @NotBlank
+	@NotEmpty(message="{String.empty}")
 	private String firstName;
 	
 	
@@ -67,7 +67,6 @@ public class Review  {
 	}
 
 	@NotEmpty
-    @NotBlank
 	private String lastName;
 
 	
@@ -84,10 +83,11 @@ public class Review  {
 	}
 
 	@NotEmpty
-    @NotBlank
 	private String comment;
 	
 	@NotEmpty
+	@Max(value=5, message= "{Max}")
+	@Min(value=1, message="{Min}")
 	private String rating;
 
 	public Review(int id, String fname,String ltext, String rtext, String rscore) {
