@@ -63,8 +63,6 @@ public class Dispatcher extends WebMvcConfigurerAdapter {
         resource.setDefaultEncoding("UTF-8");
         return resource;
     }
- 
-    
   
     @Bean(name = "validator")
     public LocalValidatorFactoryBean validator() {
@@ -81,12 +79,14 @@ public class Dispatcher extends WebMvcConfigurerAdapter {
 	@Bean
 	public LocaleResolver localeResolver(){
 		   SessionLocaleResolver resolver = new SessionLocaleResolver();
-//		   CookieLocaleResolver resolver = new CookieLocaleResolver();
-//		   AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
 		   resolver.setDefaultLocale(new Locale("en"));
-	   
 	   return resolver;
 	}
+//	kaleb added
+//	@Override
+//	  public void addViewControllers(ViewControllerRegistry registry) {
+//	    registry.addViewController("/").setViewName("index");
+//	  }
 
    
     

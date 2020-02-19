@@ -12,8 +12,8 @@ import javax.persistence.OneToOne;
 public class Payment {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	long pid;
 	
 	@OneToOne
     private User customer;

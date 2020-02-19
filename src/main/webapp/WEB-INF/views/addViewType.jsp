@@ -8,7 +8,7 @@
 <html>
   <head>
     <title>Add View Type</title>
-    <link href="resources/css/searchInput.css" rel="stylesheet">
+    <link href="resources/css/style.css" rel="stylesheet">
   </head>
   <body>
   <div id="container">
@@ -26,9 +26,6 @@
         </ul>
       </nav>
     </div>
-    <p style="text-align: right;">
-    <spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>
-    </p>
     
     <div class="top">
       <nav>
@@ -45,26 +42,19 @@
 	    	<fieldset>
 	        	<legend>Add a View Type</legend>
 		        	        
-		        	<label for="name">View Type Name</label>
-	   				<form:input   path="name"/>	  
-	   				<form:errors path="name" cssClass="text-danger"/>        
-		                
-		        	<label for="price">Base Price</label>
-	   				<form:input   path="price"/>	 
-	   				<form:errors path="price" cssClass="text-danger"/>         
+		        	<label for="name">View Type Name</label><form:input   path="name"/>	  	   				           
+		        	<label for="price">Base Price</label><form:input   path="price"/><br>
+	   				<form:errors path="name" class="text-error"/>	 
+	   				<form:errors path="price" class="text-error"/>         
 		        
 		        <p id="buttons">
 		            <input id="reset" type="reset"  value="RESET" />
 		            <input id="submit" type="submit"  value="SUBMIT" />
 		        </p>
 	    	</fieldset>
-		</form:form>   
-    </div>
-    
-    <div class="banner">
-        <form:form id="searchForm">
-            <fieldset>
-	        	<legend>List of View Types</legend>	        	
+	    	<fieldset>
+	        	<legend>List of View Types</legend>
+	        	<p style="color: red;">${deleteError }</p>	        	
 	            <table id="itemsList">
 					<tr style="width: 100%;">
 						<th style="width: 20%; text-align: center;">Name</th>
@@ -75,15 +65,22 @@
 						<tr>
 							<td align="center">${viewType.name}</td>
 							<td align="center">${viewType.price}</td>
-							<td align="center"><button >Edit</button><button >Delete</button></td>
+							<td align="center">
+								<spring:url value="/deleteViewType/{viewTypeName}"  var="delete" >
+   									<spring:param name="viewTypeName" value="${viewType.name}" />
+ 								</spring:url>
+								<a href="${delete}">Delete</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
-	    	</fieldset>                   
-        </form:form>   
+	    	</fieldset>  
+		</form:form>   
     </div>
-
-    <footer><spring:message code="home.copyright" /> 2019</footer>
+    
+	<footer class="foot">    	   	
+    	<spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>|<a href="?language=ur_PK">Urdu</a>   	
+    </footer>
   </div>
 
   </body>

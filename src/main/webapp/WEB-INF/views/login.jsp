@@ -5,9 +5,7 @@
 <html>
 <head>
     <title>LoginServlet</title>
-    <link href="resources/css/login.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="resources/js/login.js"></script>
+    <link href="resources/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -26,9 +24,6 @@
         </ul>
       </nav>
     </div>
-    <p style="text-align: right;">
-    <spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>
-    </p>
 
     <div id="content">
         <h1>Login Credentials</h1>
@@ -59,8 +54,9 @@
             <label><input id="cb" type='checkbox' name='remember' value="on" <%=checkbox%>/> Remember Me</label>
         </form>
     </div>
-
-    <footer>Copyright 2019</footer>
+	<footer class="foot">    	   	
+    	<spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>|<a href="?language=ur_PK">Urdu</a>   	
+    </footer>
 </div>
 
 </body>

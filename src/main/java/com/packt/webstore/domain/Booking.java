@@ -1,6 +1,8 @@
 package com.packt.webstore.domain;
 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,17 +17,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Booking {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long bid;
 	
 	private String bookingID;
 	
 	@Valid
-	@OneToOne
+	@OneToOne(cascade= {CascadeType.ALL})
 	private User customer;
 	
 	@Valid
-	@OneToOne
+	@OneToOne(cascade=CascadeType.MERGE)
 	private Room room;
 	
 	@NotNull(message = "{NotNull.validation}")
@@ -59,7 +61,7 @@ public class Booking {
 	}
 
 	public long getId() {
-		return id;
+		return bid;
 	}
 
 	public User getCustomer() {

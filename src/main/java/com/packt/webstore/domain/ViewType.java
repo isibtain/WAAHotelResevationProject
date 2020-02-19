@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 public class ViewType {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long vtid;
 	
 	@NotEmpty(message="{NotEmpty.validation}")
 	private String name;
@@ -23,7 +23,7 @@ public class ViewType {
 	public ViewType() {}
 
 	public long getId() {
-		return id;
+		return vtid;
 	}
 
 	public String getName() {

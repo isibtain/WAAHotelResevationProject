@@ -11,5 +11,6 @@ public interface RoomTypeService {
 	public void deleteById (Long roomTypeId);
 	
 	public RoomType findRoomTypeByName(String name);
+	public boolean used(Long id);
 	
 }

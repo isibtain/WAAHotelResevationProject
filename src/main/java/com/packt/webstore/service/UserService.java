@@ -14,5 +14,6 @@ public interface UserService {
 	public String generateUserID();
 	
 	public User findByUserID(String userID);
+	public boolean used(String id);
 	
 }

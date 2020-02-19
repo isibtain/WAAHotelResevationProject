@@ -6,7 +6,7 @@
 <html>
   <head>
     <title>Hotel</title>
-    <link href="resources/css/index.css" rel="stylesheet">
+    <link href="resources/css/style.css" rel="stylesheet">
   </head>
   <body>
   <div id="container">
@@ -24,9 +24,6 @@
         </ul>
       </nav>
     </div>
-    <p style="text-align: right;">
-    <spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>
-    </p>
     
     <div class="top">
       <nav>
@@ -37,8 +34,9 @@
         </ul>
       </nav>
     </div>
-
-    <footer><spring:message code="home.copyright" /> 2019</footer>
+	<footer class="foot">    	   	
+    	<spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>|<a href="?language=ur_PK">Urdu</a>   	
+    </footer>
   </div>
 
   </body>

@@ -1,46 +1,39 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ozbud
-  Date: 7/14/2019
-  Time: 6:29 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Confirmation</title>
-    <link href="resources/css/confirmation.css" rel="stylesheet">
-</head>
-
-<body>
-
-<div id="container">
+  <head>
+    <title>Hotel</title>
+    <link href="resources/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="container">
 
     <div class="top">
-        <h1>My Luxury Hotel</h1>
-        <nav>
-            <ul>
-                <li><a href="index.jsp" class="active">Home</a></li>
-                <li><a href="searchInput.jsp">Search rooms</a></li>
-                <li><a href="review.jsp">Reviews</a></li>
-                <li ${logged}><a href="login.jsp">Login</a></li>
-                <%--                <li><a href="#">SignUp</a></li>--%>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+      <h1><spring:message code="home.hotel.name" /></h1>
+      <nav>
+        <ul>
+          <li><a href="<spring:url  value="/index" />" class="active"><spring:message code="home" /></a></li>
+          <li><a href="<spring:url  value="/admin" />" ><spring:message code="admin" /></a></li>
+          <li><a href="<spring:url  value="/search" />" ><spring:message code="search" /></a></li>
+          <li><a href="<spring:url  value="/review" />" ><spring:message code="reviews" /></a></li>
+          <li><a href="<spring:url  value="/signup" />" ><spring:message code="sign.up" /></a></li>  
+          <li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>     
+        </ul>
+      </nav>
     </div>
-
-    <div id="content1">
+	
+    <div id="confirmation">
         <h1>BOOKING CONFIRMATION</h1>
-        <h3> Thank you for choosing us! </h3>
-        <p> A ${room.type} bed room is reserved for you starting from ${checkIn} to ${checkOut}.</p>
-        <p> Don't hesitate to give a call for any questions at 641 455 65 75 or email at booking@hotel.com</p>
+        <p> Dear <b>${customerName }</b>, Thank you for choosing our Hotel! </p>
+        <p> A <b>${roomType}</b> room is reserved for you starting from <b>${checkIn}</b> to <b>${checkOut}</b>.</p>
+        <p> For any questions about your reservation, please call us at 641 455 6575 or send an email to booking@hotel.com</p>
     </div>
+	<footer class="foot">    	   	
+    	<spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>|<a href="?language=ur_PK">Urdu</a>   	
+    </footer>
+  </div>
 
-    <footer>Copyright 2019</footer>
-</div>
-
-
-
-</body>
+  </body>
 </html>

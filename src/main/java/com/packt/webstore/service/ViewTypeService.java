@@ -13,5 +13,6 @@ public interface ViewTypeService {
 	public void deleteById (Long viewTypeId);
 	
 	public ViewType findViewTypeByName(String name);
+	public boolean used(Long id);
 	
 }

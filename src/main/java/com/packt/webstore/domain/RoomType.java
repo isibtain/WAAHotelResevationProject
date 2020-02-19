@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 public class RoomType {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long rtid;
 	
 	@NotEmpty(message="{NotEmpty.validation}")
 	private String name;
@@ -23,7 +23,7 @@ public class RoomType {
 	public RoomType() {}
 
 	public long getId() {
-		return id;
+		return rtid;
 	}
 
 	public String getName() {

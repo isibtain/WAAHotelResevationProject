@@ -8,16 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long uid;
+
 	private String userID;
 	
 	@NotEmpty(message="{NotEmpty.validation}")
@@ -27,15 +25,15 @@ public class User {
     private String lastName;
     
 	@Valid
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
 	
-	@NotNull(message = "{NotNull.validation}")
-	@Size(min = 4, max = 40, message="{Size.validation}")
+//	@NotNull(message = "{NotNull.validation}")
+//	@Size(min = 4, max = 40, message="{Size.validation}")
     private String userName;
 	
-	@NotNull(message = "{NotNull.validation}")
-	@Size(min = 4, max = 20, message="{Size.validation}")
+//	@NotNull(message = "{NotNull.validation}")
+//	@Size(min = 4, max = 20, message="{Size.validation}")
     private String password;
 
     public User() {}
@@ -47,11 +45,19 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 	}
+    
+    public long getUid() {
+		return uid;
+	}
 
-	public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
+	public void setUid(long uid) {
+		this.uid = uid;
+	}
+
+	public User(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
     public String getFirstName() {
         return firstName;

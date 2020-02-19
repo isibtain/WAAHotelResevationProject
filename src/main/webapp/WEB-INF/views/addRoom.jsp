@@ -6,9 +6,7 @@
 <html>
 <head>
     <title>Add Room</title>
-    <link href="resources/css/searchInput.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="resources/js/searchInput.js"></script>
+    <link href="resources/css/style.css" rel="stylesheet">
 </head>
 <body>
 <div id="container">
@@ -25,10 +23,7 @@
           <li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>     
         </ul>
       </nav>
-    </div>
-    <p style="text-align: right;">
-    <spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>
-    </p>
+    </div> 
     
     <div class="top">
       <nav>
@@ -66,36 +61,38 @@
 		            <input id="submit" type="submit"  value="SUBMIT" />
 		        </p>
 	    	</fieldset>  
-	    	<h2 style="color: red;" >${message }</h2>                 
-        </form:form>   
-    </div>
-    <div class="banner">
-        <form:form id="searchForm">
-            <fieldset>
+	    	<h2 style="color: red;" >${message }</h2> 
+	    	<fieldset>
 	        	<legend>List of Rooms</legend>	        	
 	            <table id="itemsList">
 					<tr style="width: 100%;">
 						<th style="width: 20%; text-align: center;">Room Type</th>
 						<th style="width: 20%; text-align: center;">View</th>
 						<th style="width: 20%; text-align: center;">Price</th>
-						<th style="width: 20%; text-align: center;">Action</th>
-						<th style="width: 20%; text-align: center;">Action</th>
+						<th style="width: 20%; text-align: center;">Actions</th>
 					</tr>
 					<c:forEach var="room" items = "${rooms}">
 						<tr>
 							<td align="center">${room.type.name}</td>
 							<td align="center">${room.view.name}</td>
-							<td align="center">${room.price}</td>
-							<td align="center"><button >Edit</button></td>
-							<td align="center"><button >Delete</button></td>
+							<td align="center">${room.price}</td>	
+							<td align="center">
+								<spring:url value="/deleteRoom/{roomID}"  var="delete" >
+   									<spring:param name="roomID" value="${room.roomID}" />
+ 								</spring:url>
+								<a href="${delete}">Delete</a>
+							</td>
+        					
 						</tr>
 					</c:forEach>
 				</table>
-	    	</fieldset>                   
+	    	</fieldset>                      
         </form:form>   
     </div>
 
-    <footer><spring:message code="home.copyright" /> 2019</footer>
+    <footer class="foot">    	   	
+    	<spring:message code="home.language" /> : <a href="?language=en_US">English</a>|<a href="?language=am_ET">አማርኛ</a>|<a href="?language=ur_PK">Urdu</a>   	
+    </footer>
 </div>
 </body>
 </html>

@@ -19,6 +19,9 @@ public interface ReviewService {
 	public List<Review> findAll();
 	public void deleteById (Long reviewId);
 	public String generateReviewID();
+	public double findAvg();
+	public int findSum();
+	public int findTotalReviews();
 	
 	public Review findByReviewID(String reviewID);
 	

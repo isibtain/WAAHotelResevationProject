@@ -32,15 +32,16 @@ public class SearchServiceImpl implements SearchService {
 		List<Booking> allBookings = (List<Booking>) bookingRepository.findAll();
 		List<Room> allRooms = (List<Room>) roomRepository.findAll();
 		List<Room> availableRooms = new ArrayList<>();
+		List<Room> booked = allBookings.stream()
+					.filter(b -> (b.getCheckInDate().before(checkin) && b.getCheckOutDate().after(checkin)) || 
+							     (b.getCheckInDate().after(checkin) && b.getCheckInDate().before(checkout)) ||
+							     (b.getCheckInDate().compareTo(checkin) == 0) || 
+							     (b.getCheckInDate().compareTo(checkout) == 0)||
+							     (b.getCheckOutDate().compareTo(checkin) == 0)||
+							     (b.getCheckOutDate().compareTo(checkout) == 0)).map(b -> b.getRoom()).collect(Collectors.toList());
 		
-		List<Room> booked = allBookings.stream().filter(b -> (b.getCheckInDate().before(checkin) &&
-                b.getCheckOutDate().after(checkout)) || (b.getCheckInDate().after(checkin) &&
-                b.getCheckInDate().before(checkout)) || (b.getCheckInDate().equals(checkin) ||
-                b.getCheckInDate().equals(checkout) || b.getCheckOutDate().equals(checkin) ||
-                b.getCheckOutDate().equals(checkout))).map(b -> b.getRoom()).collect(Collectors.toList());
-
-        for(Room r: allRooms) if(!(booked.contains(r))) availableRooms.add(r);
-        
+		List<String> roomIDs = booked.stream().map(b -> b.getRoomID()).collect(Collectors.toList());
+        for(Room r: allRooms) if(!(roomIDs.contains(r.getRoomID()))) availableRooms.add(r);               
 		return availableRooms;
 	}
  

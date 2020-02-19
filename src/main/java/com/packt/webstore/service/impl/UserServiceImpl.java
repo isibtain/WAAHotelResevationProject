@@ -1,12 +1,15 @@
 package com.packt.webstore.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.packt.webstore.repository.BookingRepository;
 import com.packt.webstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.packt.webstore.domain.Booking;
 import com.packt.webstore.domain.Room;
 import com.packt.webstore.domain.User;
 import com.packt.webstore.service.UserService;
@@ -17,6 +20,10 @@ public class UserServiceImpl implements UserService {
 	
  	@Autowired
 	private UserRepository userRepository;
+ 	
+ 	@Autowired
+	private BookingRepository bookingRepository;
+
 
 	@Override
 	public User save(User user) {
@@ -51,6 +58,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByUserID(String userID) {
 		return userRepository.findByUserId(userID);
+	}
+	
+	@Override
+	public boolean used(String id) {
+		List<String> customerIds = ((List<Booking>) bookingRepository.findAll())
+															 .stream().map(b -> b.getCustomer().getUserID())
+															 .collect(Collectors.toList());
+		if(customerIds.contains(id)) return true;
+		return false;
 	}
  
 

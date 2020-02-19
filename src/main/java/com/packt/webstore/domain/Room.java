@@ -1,5 +1,6 @@
 package com.packt.webstore.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,17 +12,17 @@ import javax.validation.Valid;
 public class Room {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long rmid;
 	
 	private String roomID;
 	
 	@Valid
-	@OneToOne
+	@OneToOne(cascade=CascadeType.MERGE)
     private RoomType type;
 	
 	@Valid
-	@OneToOne
+	@OneToOne(cascade=CascadeType.MERGE)
     private ViewType view;
 	
     private Double price;
@@ -59,7 +60,7 @@ public class Room {
 	}
 
 	public long getId() {
-		return id;
+		return rmid;
 	}
 
 	public String getRoomID() {

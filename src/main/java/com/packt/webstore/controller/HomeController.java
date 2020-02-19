@@ -12,4 +12,9 @@ public class HomeController {
 		return "index";
 	}
 	
+	@RequestMapping("/underConstruction")
+	public String underConstruction(Model model) {
+		return "accessDenied";
+	}
+	
 }

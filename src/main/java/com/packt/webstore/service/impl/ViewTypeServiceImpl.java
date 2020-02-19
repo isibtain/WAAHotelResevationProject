@@ -1,10 +1,15 @@
 package com.packt.webstore.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.packt.webstore.repository.RoomRepository;
 import com.packt.webstore.repository.ViewTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.packt.webstore.domain.Room;
 import com.packt.webstore.domain.ViewType;
 import com.packt.webstore.service.ViewTypeService;
 
@@ -14,6 +19,9 @@ public class ViewTypeServiceImpl implements ViewTypeService {
 	
  	@Autowired
 	private ViewTypeRepository viewTypeRepository;
+ 	
+ 	@Autowired
+	private RoomRepository roomRepository;
 
 	@Override
 	public ViewType save(ViewType viewType) {
@@ -38,6 +46,15 @@ public class ViewTypeServiceImpl implements ViewTypeService {
 	@Override
 	public ViewType findViewTypeByName(String name) {
 		return viewTypeRepository.findViewTypeByName(name);
+	}
+	
+	@Override
+	public boolean used(Long id) {
+		List<Long> viewTypeIds = ((List<Room>) roomRepository.findAll())
+															 .stream().map(r -> r.getView().getId())
+															 .collect(Collectors.toList());
+		if(viewTypeIds.contains(id)) return true;
+		return false;
 	}
  
 

@@ -2,9 +2,14 @@ package com.packt.webstore.controller;
 
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,7 +43,7 @@ public class BookingController {
 		return userService.findAll();
 	}
 	
-	@ModelAttribute("biookings")
+	@ModelAttribute("bookings")
 	public List<Booking> listBookings(){
 		return bookingService.findAll();
 	}
@@ -49,22 +54,41 @@ public class BookingController {
 	}
 	
 	@RequestMapping(value = "/addBooking", method = RequestMethod.POST)
-	public String saveBooking(@ModelAttribute("booking") Booking booking, RedirectAttributes redirect) {
-		Room room = roomService.findByRoomID(booking.getRoom().getRoomID());
-		User customer = userService.findByUserID(booking.getCustomer().getUserID());
-		Date checkIn = booking.getCheckInDate();
-		Date checkOut = booking.getCheckOutDate();
-		Booking newBooking = new Booking(customer, room, checkIn, checkOut, true, true);
-		newBooking.setBookingID(bookingService.generateBookingID());
-		bookingService.save(newBooking);
-		redirect.addFlashAttribute("addedBooking", newBooking);
-		
+	public String saveBooking(@Valid @ModelAttribute("booking") Booking booking, BindingResult result,
+			RedirectAttributes redirect) {
+		if(result.hasErrors()) return "addBooking";			
+		bookingService.saveNewCustomerBookingAdmin(booking);				
+		redirect.addFlashAttribute("addedBooking", booking);				
 		return "redirect:/addBooking";
 	}
 	
-	@RequestMapping(value = "/bookingAdded")
-	public String roomTypeAdded() {
-		return "bookingConfirmation";
+	@RequestMapping(value = "/deleteBooking/{bookingID}", method = RequestMethod.GET)
+	public String removeBooking(@ModelAttribute("booking") Booking booking, @PathVariable("bookingID") String bookingID,
+			RedirectAttributes redirect) {
+		bookingService.deleteById(bookingService.findByBookingID(bookingID).getId());
+		return "redirect:/addBooking";
+	}
+	
+	@RequestMapping(value = "/book/{roomID}", method = RequestMethod.GET)
+	public String customerBooking(@PathVariable String roomID, @ModelAttribute Booking booking, HttpServletRequest request) {
+		request.getSession().setAttribute("roomId", roomID);
+		return "customerBookingForm";
+	}
+	
+	@RequestMapping(value = "/book/{roomID}", method = RequestMethod.POST)
+	public String saveCustomerBooking(@Valid @ModelAttribute Booking booking,
+			BindingResult result, Model model, 
+			HttpServletRequest request) {
+		if(result.hasErrors()) return "customerBookingForm";
+		bookingService.saveNewCustomerBooking(booking, (Date) request.getSession().getAttribute("checkIn"), (Date) request.getSession().getAttribute("checkOut"));
+		request.getSession().setAttribute("customerName", booking.getCustomer().getFirstName());
+		request.getSession().setAttribute("roomType", booking.getRoom().getType().getName());
+		return "redirect:/confirm";
+	}
+	
+	@RequestMapping(value = "/confirm")
+	public String confirmUser() {
+		return "confirmation";
 	}
  
 }
