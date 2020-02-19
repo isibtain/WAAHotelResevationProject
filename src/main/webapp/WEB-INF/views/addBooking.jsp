@@ -19,18 +19,34 @@
           <li><a href="<spring:url  value="/admin" />" class="active"><spring:message code="admin" /></a></li>
           <li><a href="<spring:url  value="/search" />" ><spring:message code="search" /></a></li>
           <li><a href="<spring:url  value="/review" />" ><spring:message code="reviews" /></a></li>
-          <li><a href="<spring:url  value="/signup" />" ><spring:message code="sign.up" /></a></li>  
-          <li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>     
+          <c:if test="${alias eq null}">
+          	<li><a href="<spring:url  value="/signup" />" ><spring:message code="sign.up" /></a></li>  
+          </c:if>          
+          <c:if test="${alias eq null}">
+          	<li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>
+          </c:if> 
+          <c:if test="${alias ne null}">
+          	<li><a href="<spring:url  value="/logout" />" class="active"><spring:message code="sign.out" /></a></li>
+          </c:if>      
         </ul>
       </nav>
     </div>
+    <c:if test="${alias ne null}">
+          	<p style="color: red; padding-left: 30px;" align="left">Logged in as ${alias }</p>
+    </c:if>
+    
+    <div class="banner">
+		<h1>Welcome to Your Admin Page ${alias }</h1>
+	</div>
     
     <div class="top">
       <nav>
         <ul>
-          <li class="mid"><a href="<spring:url  value="/addRoom" />" ><spring:message code="admin.manage.room" /></a></li>
           <li class="mid"><a href="<spring:url  value="/addBooking" />" class="active"><spring:message code="admin.manage.bookings" /></a></li>
+          <li class="mid"><a href="<spring:url  value="/addRoom" />" ><spring:message code="admin.manage.room" /></a></li>          
           <li class="mid"><a href="<spring:url  value="/addUser" />" ><spring:message code="admin.manage.user" /></a></li>
+          <li class="mid"><a href="<spring:url  value="/addRoomType" />" ><spring:message code="admin.manage.type" /></a></li>
+          <li class="mid"><a href="<spring:url  value="/addViewType" />" ><spring:message code="admin.manage.view" /></a></li>
         </ul>
       </nav>
     </div><br>
@@ -70,12 +86,12 @@
 		 				<form:option value="false" label="No"/> 
 					</form:select><br><br>
 					
-	                <form:errors path="checkInDate" class="text-error"/>
-	                <form:errors path="checkOutDate" class="text-error"/>
-	                <form:errors path="customer.userID" class="text-error"/>
-	                <form:errors path="room.roomID" class="text-error"/><br>
-	                <form:errors path="customer.firstName" class="text-error"/>
-	                <form:errors path="customer.lastName" class="text-error"/>
+	                <form:errors class="texterror" path="checkInDate" />
+	                <form:errors class="texterror" path="checkOutDate" />
+	                <form:errors class="texterror" path="customer.userID" />
+	                <form:errors class="texterror" path="room.roomID" /><br>
+	                <form:errors class="texterror" path="customer.firstName" />
+	                <form:errors class="texterror" path="customer.lastName" />
             		         	       
 		            <input id="submit" type="submit"  value="SUBMIT"/>
 		        

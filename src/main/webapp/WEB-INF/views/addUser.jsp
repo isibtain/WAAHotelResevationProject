@@ -19,20 +19,33 @@
           <li><a href="<spring:url  value="/admin" />" class="active"><spring:message code="admin" /></a></li>
           <li><a href="<spring:url  value="/search" />" ><spring:message code="search" /></a></li>
           <li><a href="<spring:url  value="/review" />" ><spring:message code="reviews" /></a></li>
-          <li><a href="<spring:url  value="/signup" />" ><spring:message code="sign.up" /></a></li>  
-          <li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>     
+          <c:if test="${alias eq null}">
+          	<li><a href="<spring:url  value="/signup" />" ><spring:message code="sign.up" /></a></li>  
+          </c:if>          
+          <c:if test="${alias eq null}">
+          	<li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>
+          </c:if> 
+          <c:if test="${alias ne null}">
+          	<li><a href="<spring:url  value="/logout" />" class="active"><spring:message code="sign.out" /></a></li>
+          </c:if>     
         </ul>
       </nav>
-    </div>   
+    </div>  
+    <c:if test="${alias ne null}">
+          	<p style="color: red; padding-left: 30px;" align="left">Logged in as ${alias }</p>
+    </c:if>
+    <div class="banner">
+		<h1>Welcome to Your Admin Page ${alias }</h1>
+	</div> 
     
     <div class="top">
       <nav>
         <ul>
+          <li class="mid"><a href="<spring:url  value="/addBooking" />" ><spring:message code="admin.manage.bookings" /></a></li>
+          <li class="mid"><a href="<spring:url  value="/addRoom" />" ><spring:message code="admin.manage.room" /></a></li>          
+          <li class="mid"><a href="<spring:url  value="/addUser" />" class="active"><spring:message code="admin.manage.user" /></a></li>
           <li class="mid"><a href="<spring:url  value="/addRoomType" />" ><spring:message code="admin.manage.type" /></a></li>
           <li class="mid"><a href="<spring:url  value="/addViewType" />" ><spring:message code="admin.manage.view" /></a></li>
-          <li class="mid"><a href="<spring:url  value="/addRoom" />" ><spring:message code="admin.manage.room" /></a></li>
-          <li class="mid"><a href="<spring:url  value="/addBooking" />" ><spring:message code="admin.manage.bookings" /></a></li>
-          <li class="mid"><a href="<spring:url  value="/addUser" />" class="active"><spring:message code="admin.manage.user" /></a></li>
         </ul>
       </nav>
     </div><br>
@@ -42,17 +55,30 @@
             <fieldset>
 	        	<legend>Add User Details</legend>
 		        	        
-		        	<label for="firstName">First Name</label><form:input   path="firstName"/>	   			       		        		 	               
-		        	<label for="lastName">Last Name</label><form:input   path="lastName"/>	    				
-	   				<label for="address.email">Email Address</label><form:input   path="address.email"/>	          	                
-		        	<label for="address.street">Street</label><form:input   path="address.street"/><br><br>	 	              
-		        	<label for="address.city">City</label><form:input   path="address.city"/>	          	                
-		        	<label for="address.state">State</label><form:input   path="address.state"/>	         	               
-		        	<label for="address.zip">Zip Code</label><form:input   path="address.zip"/>	          	      	        		     
-		        	<label for="address.phone">Phone Number</label><form:input   path="address.phone"/><br><br>	  		        		                 
-		        	<label for="userName">User Name</label><form:input   path="userName"/>  
-		        	<label for="password">Password</label><form:input   path="password"/><br>      
-	   				<form:errors path="*" />				  		       
+		        	<label for="firstName">First Name</label><form:input   path="firstName" value="${addedUser.firstName }"/>	   			       		        		 	               
+		        	<label for="lastName">Last Name</label><form:input   path="lastName" value="${addedUser.lastName }"/>	    				
+	   				<label for="address.email">Email Address</label><form:input   path="address.email" value="${addedUser.address.email }"/>	          	                
+		        	<label for="address.street">Street</label><form:input   path="address.street" value="${addedUser.address.street }"/><br><br>	 	              
+		        	<label for="address.city">City</label><form:input   path="address.city" value="${addedUser.address.city }"/>	          	                
+		        	<label for="address.state">State</label><form:input   path="address.state" value="${addedUser.address.state }"/>	         	               
+		        	<label for="address.zip">Zip Code</label><form:input   path="address.zip" value="${addedUser.address.zip }"/>	          	      	        		     
+		        	<label for="address.phone">Phone Number</label><form:input   path="address.phone" value="${addedUser.address.phone }"/><br><br>	  		        		                 
+		        	<label for="userName">User Name</label><form:input   path="credentials.username" value="${addedUser.credentials.username }"/>  
+		        	<label for="password">Password</label><form:input   type="password" path="credentials.password" />
+		        	<label for="verifyPassword">Confirm Password</label><form:input   type="password" path="credentials.verifyPassword"/>		        	
+		        	<label for="authority">Authority</label>
+					<form:select id="authority" path="credentials.authority.authority">
+		 				<form:option value="ADMIN" label="ADMIN"/>
+		 				<form:option value="CUSTOMER" label="CUSTOMER"/> 
+					</form:select><br><br>
+		        	
+		        	<label for="gym">Enable?</label>
+					<form:select id="enabled" path="credentials.enabled">
+		 				<form:option value="true" label="Yes"/>
+		 				<form:option value="false" label="No"/> 
+					</form:select>  <br><br>   
+	   				<form:errors class="texterror" path="*" />	
+	   				<p style="color:red;">${credmessage }</p>			  		       
 	    	</fieldset>  
 	    	<h2 style="color: red;" >${message }</h2> 
 	    	

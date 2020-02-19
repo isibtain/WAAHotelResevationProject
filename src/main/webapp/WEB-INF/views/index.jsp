@@ -15,14 +15,23 @@
       <nav>
         <ul>
           <li><a href="<spring:url  value="/index" />" class="active"><spring:message code="home" /></a></li>
-          <li><a href="<spring:url  value="/admin" />" ><spring:message code="admin" /></a></li>
           <li><a href="<spring:url  value="/search" />" ><spring:message code="search" /></a></li>
           <li><a href="<spring:url  value="/review" />" ><spring:message code="reviews" /></a></li>
-          <li><a href="<spring:url  value="/underConstruction" />" ><spring:message code="sign.up" /></a></li>  
-          <li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>     
+          <c:if test="${alias eq null}">
+          	<li><a href="<spring:url  value="/signup" />" ><spring:message code="sign.up" /></a></li>  
+          </c:if>          
+          <c:if test="${alias eq null}">
+          	<li><a href="<spring:url  value="/login" />" ><spring:message code="sign.in" /></a></li>
+          </c:if> 
+          <c:if test="${alias ne null}">
+          	<li><a href="<spring:url  value="/logout" />" class="active"><spring:message code="sign.out" /></a></li>
+          </c:if>            
         </ul>
       </nav>
     </div>
+    <c:if test="${alias ne null}">
+          	<p style="color: red; padding-left: 30px;" align="left">Logged in as ${alias }</p>
+    </c:if>
     <br><br>
     <div class="banner">
       <h2>Indoor&Outdoor</h2>
